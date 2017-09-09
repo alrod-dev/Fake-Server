@@ -10,12 +10,34 @@ var url = require("url");
 var http = require("http");
 
 //Port we're going to listen on
-var PORT = 1230;
+var PORT = 7000;
 
 //Function that runs when our localhost:PORT is hit with http traffic
 function requestHandler(request, response) {
 
-    response.end("It Works!!!" + request.url);
+    var urlParts = url.parse(request.url);
+
+    switch (urlParts.pathname)
+    {
+        case "/":
+            response.end("/ You're in trouble");
+            break;
+
+        case "/portfolio":
+            response.end("This is my portfolio");
+            break;
+
+        case "/edit":
+            response.end("Display Edit");
+            break;
+
+        case "/fun":
+            response.end("You just won a new CAR!!!");
+            break;
+
+        default:
+            displayRoot(urlParts.pathname, request, response);
+    }
 
 }
 
